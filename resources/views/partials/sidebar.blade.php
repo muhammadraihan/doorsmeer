@@ -43,6 +43,121 @@
                     <span class="nav-link-text">Dashboard</span>
                 </a>
             </li>
+
+            <li class="nav-title">Menu</li>
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-cog"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Package</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('package.index')}}" title="Package Managements"
+                            data-filter-tags="package managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Package Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-car-side"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Vehicle</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('vehicle.index')}}" title="Vehicle Managements"
+                            data-filter-tags="vehicle managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Vehicle Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-cog"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Unit</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('unit.index')}}" title="Unit Managements"
+                            data-filter-tags="unit managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Unit Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-cog"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Item</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('item.index')}}" title="Item Managements"
+                            data-filter-tags="item managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Item Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-cog"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Stock</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('stock.index')}}" title="Stock Managements"
+                            data-filter-tags="stock managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Stock Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('stock_request.index')}}" title="Stock Request Managements"
+                            data-filter-tags="stock request managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Stock Request Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('expenses.index')}}" title="Belanja Barang Managements"
+                            data-filter-tags="belanja barang managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Belanja Barang</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-car-side"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Doorsmeer</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{{route('washjob.index')}}" title="Wash Job Managements"
+                            data-filter-tags="wash job managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Wash Job Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('washtransaction.create')}}" title="Wash Transaction Managements"
+                            data-filter-tags="wash transaction managements">
+                            <span class="nav-link-text" data-i18n="nav.users_managements">Wash Transaction Management</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="{{route('washtransaction.index')}}" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-car-side"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">Laporan</span>
+                </a>
+            </li>
             @hasanyrole('superadmin')
             <li class="nav-title">ACL & Settings</li>
             <li class="">

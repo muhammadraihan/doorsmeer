@@ -29,6 +29,18 @@ Route::group(['prefix' => 'backoffice', 'middleware' => ['auth']], function() {
     Route::resource('users','UserController');
     Route::resource('permissions', 'PermissionController');
     Route::resource('roles', 'RoleController');
+    Route::resource('package', 'PackageController');
+    Route::resource('vehicle', 'VehicleController');
+    Route::resource('unit', 'UnitController');
+    Route::resource('item', 'ItemController');
+    Route::resource('stock', 'StockController');
+    Route::resource('stock_request', 'StockRequestController');
+    Route::resource('expenses', 'ExpensesController');
+    Route::resource('washjob', 'WashJobController');
+    Route::resource('washtransaction', 'WashTransactionController');
+    Route::get('vehiclename', 'WashJobController@vehicleName')->name('get.vehicleName');
+    Route::get('packageprice', 'WashTransactionController@pricePackage')->name('get.pricePackage');
+
 
     // user Profile
     Route::get('profile', 'UserController@profile')->name('profile');
