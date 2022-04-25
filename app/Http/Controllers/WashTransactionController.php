@@ -142,8 +142,13 @@ class WashTransactionController extends Controller
     }
 
     public function pricePackage(Request $request){
-        $price = Package::where('price', $request['param'])->get();
-        dd($request['param']);
+        $price = Package::where('uuid', $request['price'])->get();
+        // dd($request['param']);
+        return response()->json($price);
+    }
+
+    public function priceItem(Request $request){
+        $price = Stock::where('uuid', $request['price'])->get();
         return response()->json($price);
     }
 

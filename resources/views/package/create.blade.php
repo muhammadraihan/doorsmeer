@@ -55,6 +55,7 @@
                         <div class="invalid-feedback">{{ $errors->first('price') }}</div>
                         @endif
                     </div>
+                    
                 <div
                     class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
                     <button class="btn btn-primary ml-auto" type="submit">Submit</button>

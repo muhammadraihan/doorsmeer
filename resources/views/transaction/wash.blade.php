@@ -32,10 +32,11 @@
                         <div class="invalid-feedback">{{ $errors->first('job_id') }}</div>
                         @endif
                     </div>
-                    <div id="box" class="form-row">
-                        <div class="form-group col-sm-4 col-xl-4">
+                    <div id="box" class="form-row align-items-center panel-content">
+                        <div class="form-group col-md-4 mb-3">
                             {{ Form::label('item_detail','Nama Item',['class' => 'required form-label'])}}
-                                <select name="item_detail" class="select-items form-control" id="select-item">
+                                <select name="item_detail" class="select-items form-control">
+                                    <option value="">Pilih Package</option>
                                     @foreach($data['package'] as $item)
                                         <option value="{{$item->uuid}}">{{$item->name}}</option>
                                     @endforeach
@@ -51,16 +52,16 @@
                         <div class="form-group col-sm-3 col-xl-3">
                             <label class="required form-label">Harga</label>
                             <div class="input-group" id="pricePackage">
-                                <div class="input-group-append" id="price">
+                                <div class="input-group-append" name="price">
                                     <span class="input-group-text">
                                         Rp.
                                     </span>
+                                    <span class="amount form-control" disabled="" name="amount[]" id="amount"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-1 col-xl-1">
-                            <br>
-                            <button id="addBox" type="button btn-group" class="btn btn-primary" data-original-title="Info" data-content="Klik untuk menambah item jika lebih dari satu" data-placement="right" data-trigger="hover"><i class="fal fa-plus"></i></button>
+                        <div class="form-group col-auto">
+                            <button id="addBox" type="button btn-group" class=" btn btn-info" ><i class="fal fa-plus"></i></button>
                         </div>
                             @if ($errors->has('item_detail'))
                             <div class="invalid-feedback">{{ $errors->first('item_detail') }}</div>
@@ -68,7 +69,7 @@
                     </div>
                     <div class="form-group col-md-4 mb-3">
                         {{ Form::label('total','Total',['class' => 'required form-label'])}}
-                        {{ Form::text('total',null,['placeholder' => 'Total','class' => 'form-control '.($errors->has('total') ? 'is-invalid':''),'required', 'autocomplete' => 'off'])}}
+                        <span class="total form-control" disabled=""></span>
                         @if ($errors->has('total'))
                         <div class="invalid-feedback">{{ $errors->first('total') }}</div>
                         @endif
@@ -82,7 +83,7 @@
                     </div>
                     <div class="form-group col-md-4 mb-3">
                         {{ Form::label('change','Change',['class' => 'required form-label'])}}
-                        {{ Form::text('change',null,['placeholder' => 'Change','class' => 'form-control '.($errors->has('change') ? 'is-invalid':''),'required', 'autocomplete' => 'off'])}}
+                        {{ Form::text('change',null,['placeholder' => 'Change','class' => 'form-control '.($errors->has('change') ? 'is-invalid':''),'required', 'autocomplete' => 'off', 'disabled'])}}
                         @if ($errors->has('change'))
                         <div class="invalid-feedback">{{ $errors->first('change') }}</div>
                         @endif
@@ -116,6 +117,17 @@
         $('.select-items').select2();
         $('.select-status').select2();
 
+        function TotalAmount(){
+            var total = 0;
+
+            $('.amount').each(function(i, e){
+                var amount = $(this).val() - 0;
+                total += amount;
+            });
+
+            $('.total').text(total);
+        }
+
         $('.select-items').on('change', function(e){
             var price = $(this).val();
 
@@ -124,23 +136,53 @@
                 type: "GET",
                 data: {price: price},
                 success: function (response) {
-                        $('#price').append('@foreach($data["pricePackage"] as $price)<input class="form-control" value="{{$price->price}}">@endforeach');
+                    $('.amount').text(response[0].price);
+                    var sum = 0;
+                    var sumsum = 0;
+
+                    $('#qty').on('change',function(e){
+                        sum = $(this).val() * response[0].price;
+                        $('.amount').text(sum);
+                    });
+                    // sum = $(this).val() * response[0].price;
+                    //  if($.isNumeric(this.value)){
+                    //     sumsum += parseFloat(this.value);
+                    //     $('.total').text(sumsum);
+                    // }
                 }
             });
         });
 
         // add box
+        var i = 0;
         $('#addBox').on('click', function(e){
-        e.preventDefault();
-        $('<div id="box"/>').addClass('input-group')
-        .html( $('<div class="form-group col-sm-4 col-xl-4">{{ Form::label("item_detail","Nama Item",["class" => "required form-label"]) }}<select name="item_detail" class="item form-control" id="select-item">@foreach($data["item"] as $item)<option value="{{$item->uuid}}">{{$item->item_name}}</option>@endforeach</select></div>'))
-        .append( $('<div class="form-group col-sm-1 col-xl-1"><label class="required form-label">Qty</label><input type="number" name="qty" v-model="cart.qty" id="qty" value="1" min="1" class="form-control"></div>'))
-        .append( $('<div class="form-group col-sm-3 col-xl-3"><label class="required form-label">Harga</label><div class="input-group"><div class="input-group-append"><span class="input-group-text">Rp.</span></div>@foreach($data["priceItem"] as $priceItem)<input class="form-control" value="{{$priceItem->unit_price}}">@endforeach</div></div>'))
-        .append( $('<div class="form-group col-sm-1 col-xl-1"><br><button id="removeBox" class="btn btn-danger remove"><i class="fal fa-minus"></i></button></div>'))
-        .insertAfter($('[id="box"]').last());
+            e.preventDefault();
+            ++i;
+            $('<div id="box"/>').addClass('input-group')
+            .html( $('<div class="form-group col-sm-4 col-xl-4">{{ Form::label("item_detail","Nama Item",["class" => "required form-label"]) }}<select name="item_detail['+i+'][item]" class="item form-control"><option>Pilih Item</option>@foreach($data["item"] as $item)<option value="{{$item->uuid}}">{{$item->item_name}}</option>@endforeach</select></div>'))
+            .append( $('<div class="form-group col-sm-1 col-xl-1"><label class="required form-label">Qty</label><input type="number" name="item_qty['+i+'][qty]" v-model="cart.qty" class="qtyItem form-control" value="1" min="1" class="form-control"></div>'))
+            .append( $('<div class="form-group col-sm-3 col-xl-3"><label class="required form-label">Harga</label><div class="input-group"><div class="input-group-append"><span class="input-group-text">Rp.</span><span class="amountItem form-control" name="priceItem['+i+'][price]"></span></div></div></div>'))
+            .append( $('<div class="form-group col-sm-1 col-xl-1"><br><button id="removeBox" class="btn btn-danger remove"><i class="fal fa-minus"></i></button></div>'))
+            .insertAfter($('[id="box"]').last());
 
-        $('.item').select2();
-      });
+            $('.item').select2();
+            $('.item').on('change', function(e){
+                var priceItem = $(this).val();
+                $.ajax({
+                url: '{{route('get.priceItem')}}',
+                type: "GET",
+                data: {price: priceItem},
+                    success: function (response) {
+                        $('.amountItem').text(response[0].unit_price);
+                        var sum = 0;
+                        $('.qtyItem').on('change',function(e){
+                            sum = $(this).val() * response[0].unit_price;
+                            $('.amountItem').text(sum);
+                        });
+                    }
+                });
+            })
+        });
 
       $(document).on('click','button.remove', function(e){
         e.preventDefault();

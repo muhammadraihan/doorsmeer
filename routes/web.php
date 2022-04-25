@@ -40,6 +40,8 @@ Route::group(['prefix' => 'backoffice', 'middleware' => ['auth']], function() {
     Route::resource('washtransaction', 'WashTransactionController');
     Route::get('vehiclename', 'WashJobController@vehicleName')->name('get.vehicleName');
     Route::get('packageprice', 'WashTransactionController@pricePackage')->name('get.pricePackage');
+    Route::get('packageitem', 'WashTransactionController@priceItem')->name('get.priceItem');
+
 
 
     // user Profile
